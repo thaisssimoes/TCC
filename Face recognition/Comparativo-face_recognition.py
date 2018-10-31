@@ -1,5 +1,6 @@
 import os
 import face_recognition
+from datetime import datetime
 
 QUANTIDADE_TOTAL_FOTOS = 541
 
@@ -36,15 +37,17 @@ class TesteFacial():
 
                     self.exportarResultado(pasta, item, str(i) + ".png", self.results)
                     #print("Imagem origem"+item+"Imagem comparada:"+ str(i) + ".png")
-
+    #mudar o nome de item=imagem_origem e lista_imagem=imagem_comparada
     def exportarResultado(self, pasta, item, lista_imagem, results):
-        f = open("resultado-face_recognition-geral.csv", "a")
+        f = open("resultado-face_recognition-pastas.csv", "a")
         f.write(pasta+";"+item+";"+lista_imagem+";"+str(results)+"\n")
         f.close()
 
 
     def verificarResultado(self, rosto_conhecido, rosto_desconhecido):
-        if len(rosto_desconhecido) == 0:
+        if len(rosto_desconhecido) == 0 and len(rosto_conhecido) == 0:
+            self.results = "Problema nas duas imagens"
+        elif len(rosto_desconhecido) == 0:
             self.results = "Problema na imagem comparada."
         elif len(rosto_conhecido) == 0:
             self.results = "Problema na imagem de origem."
@@ -60,4 +63,6 @@ endereco_grupo = '/home/thais/Imagens/Reconhecimento Facial/Base de dados oclus√
 
 teste = TesteFacial()
 dicionario_imagens = teste.importarImagens(endereco_pastas)
-teste.compararGrupo(endereco_pastas, endereco_grupo, dicionario_imagens)
+print(datetime.now())
+teste.compararPasta(endereco_pastas,dicionario_imagens)
+print(datetime.now())

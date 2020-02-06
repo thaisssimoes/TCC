@@ -57,17 +57,16 @@ class ReconhecimentoFacial():
 				arquivo = name.split('-')
 				if arquivo[0] not in self.individuos.keys():
 					self.imagens = list()
-					self.imagens.append(endereco + "/" + name)
+					self.imagens.append(endereco + name)
 					self.individuos[arquivo[0]] = self.imagens
 				else:
-					self.individuos[arquivo[0]].append(endereco + "/" + name)
+					self.individuos[arquivo[0]].append(endereco + name)
 		return self.individuos
 
 	def resultados(self, dicionario_imagens):
 		for individuo_origem, lista_imagem_origem in dicionario_imagens.items():
 			print(individuo_origem)
 			for individuo_comparado, lista_imagem_comparada in dicionario_imagens.items():
-				#for imagem_origem in lista_imagem_origem:
 				for imagem_comparada  in range(0, len(lista_imagem_comparada)):
 					tempoAntes = datetime.now()
 					imagem_origem = ENDERECO + individuo_origem + "-1.png"
@@ -87,21 +86,21 @@ class ReconhecimentoFacial():
 
 					if (imagem1 == True) or (imagem2 == True):
 						if imagem1 and imagem2:
-							resultado = "{};{};{};{};Problema nas duas imagens;{}".format(individuo_origem, "1", individuo_comparado, imagem_comparada,tempoReconhecimento)
+							resultado = "{};{};{};{};Problema nas duas imagens;{}".format(individuo_origem, "1", individuo_comparado, dicionario_imagens[individuo_comparado][imagem_comparada],tempoReconhecimento)
 
 						elif imagem1 and not imagem2:
-							resultado = "{};{};{};{};Problema na imagem de origem;{}".format(individuo_origem, "1", individuo_comparado, imagem_comparada,tempoReconhecimento)
+							resultado = "{};{};{};{};Problema na imagem de origem;{}".format(individuo_origem, "1", individuo_comparado, dicionario_imagens[individuo_comparado][imagem_comparada],tempoReconhecimento)
 
 						elif imagem2 and not imagem1:
-							resultado="{};{};{};{};Problema na imagem comparada;{}".format(individuo_origem, "1", individuo_comparado, imagem_comparada,tempoReconhecimento)
+							resultado="{};{};{};{};Problema na imagem comparada;{}".format(individuo_origem, "1", individuo_comparado, dicionario_imagens[individuo_comparado][imagem_comparada],tempoReconhecimento)
 
 					else:
 						d= imagem_origem_aux - imagem_comparada_aux
 						if (np.dot(d, d) <= 0.60):
-							resultado ="{};{};{};{};[True];{}".format(individuo_origem, "1", individuo_comparado, imagem_comparada,tempoReconhecimento)
+							resultado ="{};{};{};{};[True];{}".format(individuo_origem, "1", individuo_comparado, dicionario_imagens[individuo_comparado][imagem_comparada],tempoReconhecimento)
 
 						else:
-							resultado = "{};{};{};{};[False];{}".format(individuo_origem,"1", individuo_comparado, imagem_comparada,tempoReconhecimento)
+							resultado = "{};{};{};{};[False];{}".format(individuo_origem,"1", individuo_comparado, dicionario_imagens[individuo_comparado][imagem_comparada],tempoReconhecimento)
 
 					self.exportarResultados(resultado)
 

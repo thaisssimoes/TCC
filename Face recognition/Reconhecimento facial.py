@@ -12,10 +12,10 @@ class ReconhecimentoFacial():
                 arquivo = name.split('-')
                 if arquivo[0] not in self.individuos.keys():
                     self.imagens = list()
-                    self.imagens.append(endereco + "/" + name)
+                    self.imagens.append(endereco +  name)
                     self.individuos[arquivo[0]] = self.imagens
                 else:
-                    self.individuos[arquivo[0]].append(endereco + "/" + name)
+                    self.individuos[arquivo[0]].append(endereco + name)
         return self.individuos
 
     def compararTodos(self, endereco, dicionario_imagens):
